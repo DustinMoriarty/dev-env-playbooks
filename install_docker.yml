@@ -1,0 +1,21 @@
+---
+- name: install docker
+  hosts: localhost
+  tasks:
+    - name: add docker repository gpg key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+        state: present
+    - name: add docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: install docker
+      apt:
+         update_cache: yes
+         pkg:
+           - docker-ce
+           - docker-ce-cli
+           - containerd.io
+         state: latest
