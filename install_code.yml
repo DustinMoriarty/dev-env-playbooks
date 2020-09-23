@@ -1,0 +1,22 @@
+---
+- name: install code
+  hosts: localhost
+  tasks:
+    - name: add code repository gpg key
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc 
+        state: present
+    - name: add code repository
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main 
+        state: present
+    - name: install code dependencies
+      apt:
+        pkg:
+          - apt-transport-https
+        update_cache: yes
+    - name: install code
+      apt:
+         update_cache: yes
+         name: code
+         state: latest
