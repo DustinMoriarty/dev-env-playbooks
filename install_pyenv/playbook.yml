@@ -1,0 +1,39 @@
+---
+- name: install pyenv
+  hosts: all
+  vars_files:
+    - vars/default.yml
+  tasks:
+    - name: Make checkout directory
+      file:
+        path: "{{ pyenv_tmp_dir }}"
+        state: directory
+    - name: Get pyenv source
+      get_url:
+        url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
+        dest: "{{ pyenv_tmp_dir }}"
+        mode: 0755
+    - name: Run pyenv installer
+      command: "{{ pyenv_tmp_dir|quote }}/pyenv-installer"
+      args:
+        creates: ~/.pyenv
+    - name: Clean up
+      file:
+        path: "{{ pyenv_tmp_dir }}"
+        state: absent
+    - name: Install python 3.6
+      command: ~/.pyenv/bin/pyenv install 3.6.11
+      args:
+        creates: ~/.pyenv/versions/3.6.11
+    - name: Install python 3.7
+      command: ~/.pyenv/bin/pyenv install 3.7.8
+      args:
+        creates: ~/.pyenv/versions/3.7.8
+    - name: Install python 3.8
+      command: ~/.pyenv/bin/pyenv install 3.8.5
+      args:
+        creates: ~/.pyenv/versions/3.8.5
+    - name: Declare python 3.8 as global
+      command: ~/.pyenv/bin/pyenv global 3.8.5
+      
+        
