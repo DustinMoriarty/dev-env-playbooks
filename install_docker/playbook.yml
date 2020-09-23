@@ -9,10 +9,12 @@
         url: https://download.docker.com/linux/ubuntu/gpg
         id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
         state: present
+      become: yes
     - name: add docker repository
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ release }} stable
         state: present
+      become: yes
     - name: install docker
       apt:
          update_cache: yes
@@ -21,3 +23,4 @@
            - docker-ce-cli
            - containerd.io
          state: latest
+      become: yes
