@@ -1,6 +1,6 @@
 ---
 - name: install code
-  hosts: localhost
+  hosts: all
   tasks:
     - name: add code repository gpg key
       apt_key:
