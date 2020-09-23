@@ -1,6 +1,8 @@
 ---
 - name: install docker
   hosts: all
+  vars_files:
+    - vars/default.yml
   tasks:
     - name: add docker repository gpg key
       apt_key:
@@ -9,7 +11,7 @@
         state: present
     - name: add docker repository
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ release }} stable
         state: present
     - name: install docker
       apt:
