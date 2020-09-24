@@ -1,0 +1,16 @@
+---
+- name: install helpful utilities
+  hosts: all
+  tasks:
+    - name: install packages
+      apt:
+        pkg:
+          - vim
+          - curl
+          - dos2unix
+          - tmux
+          - build-essential
+          - can-utils
+          - htop
+        update_cache: yes
+        state: latest
