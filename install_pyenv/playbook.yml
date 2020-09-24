@@ -4,6 +4,27 @@
   vars_files:
     - vars/default.yml
   tasks:
+    - name: Install pyenv dendencies
+      apt:
+        pkg:
+          - build-essential
+          - libssl-dev
+          - zlib1g-dev
+          - libbz2-dev
+          - libreadline-dev
+          - libsqlite3-dev
+          - wget
+          - curl
+          - llvm
+          - libncurses5-dev
+          - xz-utils
+          - tk-dev
+          - libffi-dev
+          - liblzma-dev
+          - python-openssl
+          - git
+        state: present
+      become: yes
     - name: Make checkout directory
       file:
         path: "{{ pyenv_tmp_dir }}"
