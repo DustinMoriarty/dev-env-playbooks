@@ -1,0 +1,31 @@
+---
+- name: install poetry
+  hosts: all
+  vars_files:
+    - vars/default.yml
+  tasks:
+    - name: Make checkout directory
+      file:
+        path: "{{ poetry_tmp_dir }}"
+        state: directory
+    - name: Get poetry source
+      get_url:
+        url: https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
+        dest: "{{ poetry_tmp_dir }}"
+        mode: 0755
+    - name: Run poetry installer
+      command: "/usr/bin/python3 {{ poetry_tmp_dir|quote }}/get-poetry.py"
+      args:
+        creates: ~/.poetry
+      become_user: "{{ user|mandatory }}"
+      become: yes
+    - name: Clean up
+      file:
+        path: "{{ poetry_tmp_dir }}"
+        state: absent
+    - name: Add poetry to path for user.
+      lineinfile:
+        line: export PATH="/home/{{ user|mandatory }}/.poetry/bin:$PATH"
+        path: "/home/{{ user|mandatory }}/.bashrc"
+        state: present
+      

@@ -1,2 +1,3 @@
 ---
-pyenv_tmp_dir: ~/checkout/pyenv
+pyenv_tmp_dir: /checkout/pyenv
+pyenv_root: "/home/{{ user|mandatory}}/.pyenv"
