@@ -23,7 +23,7 @@
           - liblzma-dev
           - python-openssl
           - git
-        state: present
+        state: latest
       become: yes
     - name: Make checkout directory
       file:
