@@ -1,0 +1,20 @@
+---
+- name: install jdk
+  hosts: all
+  tasks:
+    - name: install jdks
+      apt:
+        pkg:
+          - openjdk-8-jdk
+          - openjdk-11-jdk
+          - openjdk-14-jdk
+        update_cache: yes
+        state: latest
+      become: yes
+    - name: install maven
+      apt:
+        name: maven
+    - name: set default jdk
+      command: update-alternatives --set java /usr/lib/jvm/java-14-openjdk-amd64/bin/java
+      become: yes
+        
