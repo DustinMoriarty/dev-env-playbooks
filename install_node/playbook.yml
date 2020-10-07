@@ -1,0 +1,33 @@
+---
+- name: install npm
+  hosts: all
+  vars_files:
+    - vars/default.yml
+  tasks:
+    - name: Get NVM installer
+      get_url: 
+        url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh
+        dest: "{{ tmp_dir }}}"
+        mode: 0755
+    - name: Install NVM
+      command: "{{ tmp_dir }}/install.sh"
+      args:
+          creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    - name: Install Node 10.22.1
+      shell: |
+             source {{ ansible_env.HOME }}/.nvm/nvm.sh
+             nvm install v10.22.1
+      args:
+        executable: /bin/bash
+    - name: Install Node 12.19.0
+      shell: |
+             source {{ ansible_env.HOME }}/.nvm/nvm.sh
+             nvm install --latest-npm v12.19.0
+      args:
+        executable: /bin/bash
+    - name: Install Node 14.13.0
+      shell: |
+             source {{ ansible_env.HOME }}/.nvm/nvm.sh
+             nvm install v14.13.0
+      args:
+        executable: /bin/bash
